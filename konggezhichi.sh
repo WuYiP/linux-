@@ -1,6 +1,6 @@
 #!/bin/bash
 #备份文件，并把所有非相关文件和文件夹删除。
-#
+#支持带有空格的文件夹/文件
 oldIFS=$IFS
 IFS=$(echo -en "\n\b")
 function diff1(){
@@ -11,9 +11,7 @@ do
   file_desc=$2/${file}
   if [ -f  "$filepath" ] 
   then
-	echo 22
     diff -arq  "${filepath}" "${file_desc}" 1>/dev/null 2>&1 && result=0 || result=1
-      echo 33
 	  if [ "$result" == 1 ];then
           cp "$filepath" "$file_desc"
       else
@@ -73,7 +71,6 @@ else
 		fi
 	 fi
 	done  
-	echo $rmfile
 	cd $1
 	shell="ls $rmfile|xargs rm -rf"
 	echo $shell
